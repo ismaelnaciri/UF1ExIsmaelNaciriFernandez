@@ -16,14 +16,19 @@ const imagesDirPath = __dirname + "\\assets\\UF1_ExamenAaDIsmaelNaciriFernandez\
 app.get("/llegirImatgesNaciriFernandez", (req, res) => {
   const files = fs.readdirSync(imagesDirPath);
   for (const file of files) {
-    const readableStream = fs.createReadStream(path.join(imagesDirPath, file), {highWaterMark: 4096}); //highWaterMark = amount of chunks per wave
-
-    readableStream.on('data', (chunk) => {
+    if (path.extname(file) === '.jpg') {
+      const readableStream = fs.createReadStream(path.join(imagesDirPath, file), {highWaterMark: 4096}); //highWaterMark = amount of chunks per wave
       console.log("Image: " + file);
 
-      const buffer = Buffer.from(chunk);
-      console.log(buffer);
-    });
+      readableStream.on('data', (chunk) => {
+        const buffer = Buffer.from(chunk);
+        console.log(buffer);
+      })
+
+      readableStream.on("end", () => {
+        console.log("\n" + file + " Ended");
+      })
+    }
   }
 });
 
