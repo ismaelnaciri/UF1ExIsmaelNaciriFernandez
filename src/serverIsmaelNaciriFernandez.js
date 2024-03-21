@@ -13,9 +13,9 @@ app.listen(port, () => {
 
 //Ex1
 const imagesDirPath = __dirname + "\\assets\\UF1_ExamenAaDIsmaelNaciriFernandez\\Imatges";
-app.get("/llegirImatgesNaciriFernandez", async (req, res) => {
+app.get("/llegirImatgesNaciriFernandez", (req, res) => {
   const files = fs.readdirSync(imagesDirPath);
-  files.forEach((file) => {
+  for (const file of files) {
     const readableStream = fs.createReadStream(path.join(imagesDirPath, file), {highWaterMark: 4096}); //highWaterMark = amount of chunks per wave
 
     readableStream.on('data', (chunk) => {
@@ -24,7 +24,7 @@ app.get("/llegirImatgesNaciriFernandez", async (req, res) => {
       const buffer = Buffer.from(chunk);
       console.log(buffer);
     });
-  });
+  }
 });
 
 //Ex2
