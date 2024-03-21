@@ -14,6 +14,7 @@ app.listen(port, () => {
 //Ex1
 const imagesDirPath = __dirname + "\\assets\\UF1_ExamenAaDIsmaelNaciriFernandez\\Imatges";
 app.get("/llegirImatgesNaciriFernandez", (req, res) => {
+
   const files = fs.readdirSync(imagesDirPath);
   for (const file of files) {
     if (path.extname(file) === '.jpg') {
@@ -23,11 +24,11 @@ app.get("/llegirImatgesNaciriFernandez", (req, res) => {
       readableStream.on('data', (chunk) => {
         const buffer = Buffer.from(chunk);
         console.log(buffer);
-      })
+      });
 
       readableStream.on("end", () => {
         console.log("\n" + file + " Ended");
-      })
+      });
     }
   }
 });
